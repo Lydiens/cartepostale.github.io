@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="style.css">
     <title>Document</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
-
-
 </head>
 
 <body>
@@ -24,19 +22,8 @@
                 <div class="vertical-line"></div>
 
                 <div class="verso_gauche">
-                    <p class="review" id="review">
-                        RIDICULE !<br>
-                        30E la commande j'ai un burger il me fait DE LA PEINE,<br>
-                        Meme dans les pires prisons du pays le moins developpé on nous chie pas une telle merde,<br>
-                        La portion de frite equivalent a un menu enfant, le menu big m a 12e regale mieux que ce bousin
-                        chier par un chien galeux,<br>
-                        0/10 ya rien (amerasian a 30e super concept)<br>
-                        Passer votre chemin ya 100 resto 10x mieux,<br>
-                    </p>
-                    <h1 class="signature" id="signature">
-                        le grand dio
-                    </h1>
-
+                    <p class="review" id="review"></p>
+                    <h1 class="signature" id="signature"></h1>
                 </div>
 
                 <div class="verso_droite">
@@ -47,77 +34,84 @@
                             57000 <br>
                             Metz
                         </p>
-                       
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-<script>
-    console.log("Le script JavaScript est chargé.");
+    <script>
+        console.log("Le script JavaScript est chargé.");
 
-    // Fonction pour obtenir quatre images aléatoires d'un dossier
-    function getRandomImages(folder) {
-        const images = [
-            '1.png',
-            '2.png',
-            '3.png',
-            '4.png'
-        ];
-        const randomImages = [];
-        while (randomImages.length < 4) {
-            const randomIndex = Math.floor(Math.random() * images.length);
-            const image = images[randomIndex];
-            if (!randomImages.includes(image)) {
-                randomImages.push(image);
+        // Fonction pour obtenir quatre images aléatoires d'un dossier
+        function getRandomImages(folder) {
+            const images = [
+                '1.png',
+                '2.png',
+                '3.png',
+                '4.png',
+                '5.png',
+                '6.png',
+                '7.png',
+                '8.png',
+            ];
+            const randomImages = [];
+            while (randomImages.length < 4) {
+                const randomIndex = Math.floor(Math.random() * images.length);
+                const image = images[randomIndex];
+                if (!randomImages.includes(image)) {
+                    randomImages.push(image);
+                }
             }
+            console.log(`Images choisies dans le dossier ${folder}:`, randomImages);
+            return randomImages.map(image => `${folder}/${image}`);
         }
-        console.log(`Images choisies dans le dossier ${folder}:`, randomImages);
-        return randomImages.map(image => `${folder}/${image}`);
-    }
 
-    // Fonction pour obtenir un texte aléatoire à partir d'un fichier
-    function getRandomText(folder, fileNames) {
-        const randomIndex = Math.floor(Math.random() * fileNames.length);
-        const fileName = fileNames[randomIndex];
-        return fetch(`${folder}/${fileName}`)
-            .then(response => response.text())
-            .catch(error => console.error('Erreur lors du chargement du fichier:', error));
-    }
+        // Fonction pour obtenir un texte aléatoire à partir d'un fichier
+        function getRandomText(folder, fileNames) {
+            const randomIndex = Math.floor(Math.random() * fileNames.length);
+            const fileName = fileNames[randomIndex];
+            return fetch(`${folder}/${fileName}`)
+                .then(response => response.text())
+                .catch(error => console.error('Erreur lors du chargement du fichier:', error));
+        }
 
-    // Fonction pour insérer les images et le texte dans la div
-    function insertContent() {
-        const carteDiv = document.getElementById('carte');
-        const folder = Math.random() < 0.5 ? '1' : '2'; // Choisir aléatoirement entre '1' et '2'
-        const images = getRandomImages(folder);
+        // Fonction pour insérer les images et le texte dans la div
+        function insertContent() {
+            const carteDiv = document.getElementById('carte');
+            const maxFolderNumber = 16; // <<< MODIFIE ICI LE NOMBRE DE DOSSIERS DISPOS
+            const folder = Math.floor(Math.random() * maxFolderNumber) + 1; // Dossier entre '1' et '10'
+            const folderStr = folder.toString();
 
-        images.forEach(src => {
-            const img = document.createElement('img');
-            img.src = src;
-            img.alt = 'Image';
-            img.className = 'photo';
-            carteDiv.appendChild(img);
-            console.log(`Image ajoutée: ${src}`);
-        });
+            const images = getRandomImages(folderStr);
 
-        // Charger le texte aléatoire
-        const reviewFiles = ['review1.txt', 'review2.txt'];
-        const adresseFiles = ['adresse1.txt', 'adresse2.txt'];
-        const signatureFiles = ['signature1.txt', 'signature2.txt'];
+            images.forEach(src => {
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = 'Image';
+                img.className = 'photo';
+                carteDiv.appendChild(img);
+                console.log(`Image ajoutée: ${src}`);
+            });
 
-        Promise.all([
-            getRandomText(folder, reviewFiles).then(text => document.getElementById('review').innerText = text),
-            getRandomText(folder, adresseFiles).then(text => document.getElementById('adresse').innerText = text),
-            getRandomText(folder, signatureFiles).then(text => document.getElementById('signature').innerText = text)
-        ]).then(() => {
-            console.log('Texte chargé avec succès.');
-        });
-    }
+            // Définition des fichiers texte possibles
+            const reviewFiles = ['review1.txt', 'review2.txt', 'review3.txt', 'review4.txt', 'review5.txt'];
+            const adresseFiles = ['adresse1.txt'];
+            const signatureFiles = ['signature1.txt', 'signature2.txt', 'signature3.txt', 'signature4.txt', 'signature5.txt'];
 
-    // Appeler la fonction pour insérer le contenu
-    insertContent();
-</script>
+            // Chargement asynchrone des fichiers texte
+            Promise.all([
+                getRandomText(folderStr, reviewFiles).then(text => document.getElementById('review').innerText = text),
+                getRandomText(folderStr, adresseFiles).then(text => document.getElementById('adresse').innerText = text),
+                getRandomText(folderStr, signatureFiles).then(text => document.getElementById('signature').innerText = text)
+            ]).then(() => {
+                console.log('Texte chargé avec succès.');
+            });
+        }
+
+        // Appel initial
+        insertContent();
+    </script>
 </body>
 
 </html>

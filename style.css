@@ -74,7 +74,7 @@
   }
 
   .verso_gauche p {
-        font-size: 1.5em;
+    font-size: 2vh;
     line-height: 1;
     margin: 0;
   }
@@ -125,18 +125,20 @@
   }
 
   @media print {
-.carte, .verso {
 
-  display: block;
-}
+    .carte,
+    .verso {
+
+      display: block;
+    }
 
   }
 
-.signature {
-  align-content: flex-end;
-  font-size: 2.5em;
-}
+  .signature {
+    align-content: flex-end;
+    font-size: 2.5em;
+  }
 
-.adresse {
-  font-size: 2.5em;
-}
+  .adresse {
+    font-size: 2.5em;
+  }
