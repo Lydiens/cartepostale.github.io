@@ -1,3 +1,2 @@
-Nom de rue,
-500000
-Madrid
+62 Bd Barbès, 
+75018 Paris
